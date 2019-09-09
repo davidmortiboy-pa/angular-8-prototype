@@ -1,1 +1,9 @@
-<p>series-list works!</p>
+<div *ngIf="series">
+  <ul>
+    <li>Title: {{series.Title}}</li>
+    <li>Year: {{series.Year}}</li>
+    <li><img [src]="series.Poster"/></li>
+    <li><p>{{series.Plot}}</p></li>
+    <li></li>
+  </ul>
+</div>
