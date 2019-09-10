@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {SeriesService} from '../services/series.service';
 import {Series} from '../models/series.model';
 
@@ -11,7 +11,8 @@ import {Series} from '../models/series.model';
 
 export class SeriesListComponent implements OnInit, OnDestroy {
 
-  series$: Subscription;
+  // series$: Subscription; // Using the subscription method
+  series$: Observable<Series>; // Using the async pipe method
   series: Series;
 
   constructor(private seriesService: SeriesService) {
@@ -22,7 +23,7 @@ export class SeriesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.series$.unsubscribe();
+    // this.series$.unsubscribe(); // Using the subscription method
   }
 
   updateSeries(name: HTMLInputElement) {
@@ -32,10 +33,16 @@ export class SeriesListComponent implements OnInit, OnDestroy {
   }
 
   private _updateSeriesOnPage(name: string) {
-    this.series$ = this.seriesService.getsSeries(name)
+    // Using the subscription method
+
+    /*this.series$ = this.seriesService.getsSeries(name)
       .subscribe((s) => {
         console.log(s);
         this.series = s;
-      });
+      });*/
+
+    // Using the async pipe method
+
+    this.series$ = this.seriesService.getsSeries(name);
   }
 }
