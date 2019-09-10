@@ -11,21 +11,31 @@ import {Series} from '../models/series.model';
 
 export class SeriesListComponent implements OnInit, OnDestroy {
 
-  series$: Subscription
+  series$: Subscription;
   series: Series;
 
-  constructor(private seriesService: SeriesService) {}
+  constructor(private seriesService: SeriesService) {
+  }
 
   ngOnInit() {
-    this.series$ = this.seriesService.getsSeries()
-      .subscribe((s) => {
-        console.log(s);
-        this.series = s;
-      });
+    this._updateSeriesOnPage('Game of Thrones');
   }
 
   ngOnDestroy(): void {
     this.series$.unsubscribe();
   }
 
+  updateSeries(name: HTMLInputElement) {
+
+    console.log(`Updating series: ${name.value}`);
+    this._updateSeriesOnPage(name.value);
+  }
+
+  private _updateSeriesOnPage(name: string) {
+    this.series$ = this.seriesService.getsSeries(name)
+      .subscribe((s) => {
+        console.log(s);
+        this.series = s;
+      });
+  }
 }
