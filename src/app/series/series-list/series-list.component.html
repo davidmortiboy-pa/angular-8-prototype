@@ -1,6 +1,7 @@
 <div>
-  <input type="text" #seriesName />
-  <button (click)="updateSeries(seriesName)">Get</button>
+  <label for="getSeriesInformation">Get Series Information:</label>
+  <input id="getSeriesInformation" type="text" #seriesName />
+  <button (click)="updateSeries(seriesName)">GO</button>
 </div>
 
 <!-- Using the subscription method: -->
@@ -17,10 +18,21 @@
 <!-- Using the async pipe method: -->
 
 <ng-container *ngIf="series$ | async as series">
-  <ul>
-    <li>Title: {{series.Title}}</li>
-    <li>Year: {{series.Year}}</li>
-    <li><img [src]="series.Poster"/></li>
-    <li><p>{{series.Plot}}</p></li>
-  </ul>
+  <div class="d-flex">
+    <div>
+      <h2>JSON</h2>
+      <ul>
+        <li [innerHTML]="series | prettyJson">
+        </li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li class="title">{{series.Title}}</li>
+        <li>{{series.Year}}</li>
+        <li><img [src]="series.Poster"/></li>
+        <li><p>{{series.Plot}}</p></li>
+      </ul>
+    </div>
+  </div>
 </ng-container>
